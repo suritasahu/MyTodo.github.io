@@ -1,0 +1,77 @@
+{% extends 'base.html' %} 
+{% block title %} Your Todos {% endblock title %}
+{% block body %}
+
+<div class="container my-3">
+    <h2>Your Todos</h2>
+
+    {% if search_query %}
+      <div class="alert alert-info" role="alert">
+          <strong>Search results for:</strong> "{{ search_query }}"
+      </div>
+    {% endif %}
+    
+    {% if allTodo|length == 0 %}
+        <div class="alert alert-warning" role="alert">
+            No record found. Add your Todo!
+        </div>
+    {% else %}
+        {% if search_query %}
+            <h4 class="mt-4">Search Results:</h4>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">SNo</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo in allTodo %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ todo.title }}</td>
+                        <td>{{ todo.desc }}</td>
+                        <td>{{ todo.date_created }}</td>
+                        <td>
+                            <a href="/update/{{ todo.sno }}" class="btn btn-outline-info btn-sm mx-1">Update</a>
+                            <a href="/delete/{{ todo.sno }}" class="btn btn-outline-dark btn-sm mx-1">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        
+        <h4 class="mt-4">All Todos:</h4>
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">SNo</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in allTodo %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ todo.title }}</td>
+                    <td>{{ todo.desc }}</td>
+                    <td>{{ todo.date_created }}</td>
+                    <td>
+                        <a href="/update/{{ todo.sno }}" class="btn btn-outline-info btn-sm mx-1">Update</a>
+                        <a href="/delete/{{ todo.sno }}" class="btn btn-outline-dark btn-sm mx-1">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+{% endblock body %}
